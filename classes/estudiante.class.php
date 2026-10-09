@@ -34,7 +34,7 @@ class Estudiante{
         $this->idgenero = $idgenero;
     }
 
-    public fucntion getIdGenero(){
+    public function getIdGenero(){
         return $this->idgenero;
     }
 
@@ -42,7 +42,7 @@ class Estudiante{
     public function obtenerEstudiante(int $idestudiante){
         $this->setIdEstudiante($idestudiante);
         if($this->idestudiante > 0){
-            $resultado = $this->conexion('SELECT * FROM estudiante WHERE id_estudiante='.$this->idestudiante.';');
+            $resultado = $this->conexion->run('SELECT * FROM estudiante WHERE id_estudiante='.$this->idestudiante.';');
             $array = array("mensaje"=>"Registros encontrados","Valores"=>$resultado->fetch());
             return $array;
         }else{
@@ -52,7 +52,7 @@ class Estudiante{
 
     //MÉTODO PARA OBTENER LOS REGISTROS DE TODOS LOS ESTUDIANTES
     public function obtenerEstudiantes(){
-        $resultado = $this->conexion('SELECT * FROM estudiante;');
+        $resultado = $this->conexion->run('SELECT * FROM estudiante;');
         $array = array("mensaje"=>"Registros encontrados","Valores"=>$resultado->fetch());
         return $array;
     }
@@ -64,7 +64,7 @@ class Estudiante{
                 "fecha_nac" => $fechanacimiento,
                 "id_genero" => $idgenero
             );
-            $resultado = $this->conexion('INSERT INTO estudiante(fecha_nacimiento_estudiante,id_genero)VALUES(:fecha_nac,:id_genero);',$parametros);
+            $resultado = $this->conexion->run('INSERT INTO estudiante(fecha_nacimiento_estudiante,id_genero)VALUES(:fecha_nac,:id_genero);',$parametros);
             if($this->conexion->n > 0 and $this->conexion->id > 0){
                 $resultado = $this->obtenerEstudiante($this->conexion->id);
                 $array = array("mensaje"=>"Registros encontrados","Valores"=>$resultado["Valores"]);
